@@ -1,0 +1,58 @@
+﻿Create Project
+1) New Project -> Class Library -> Add -> New Item -> Component Class
+
+Add to Toolbox
+1) Add Tab -> enter whatever name
+2) Choose Items -> .Net Framework Component -> Browse -> find .dll
+
+Coding
+
+
+Public Class Form1
+
+    Private mDropdownMenu As DropdownMenu
+
+    Public Sub Form1()
+        InitializeComponent()
+    End Sub
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+        'design time
+        DropdownMenu1.IsMainMenu = False
+
+        DropdownMenu2.IsMainMenu = True
+        DropdownMenu2.PrimaryColor = Color.OrangeRed
+        DropdownMenu2.MenuItemTextColor = Color.OrangeRed
+
+
+        'dynamic
+        mDropdownMenu = New DropdownMenu(New System.ComponentModel.Container)
+        mDropdownMenu.IsMainMenu = True
+        mDropdownMenu.PrimaryColor = Color.OrangeRed
+        mDropdownMenu.MenuItemTextColor = Color.OrangeRed
+
+        Dim item, submenu As ToolStripMenuItem
+
+        submenu = New ToolStripMenuItem()
+        submenu.Text = "Sub-menu 1"
+
+        item = New ToolStripMenuItem()
+        item.Text = "Sub-item 1"
+        submenu.DropDownItems.Add(item)
+
+        mDropdownMenu.Items.Add(submenu)
+
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        mDropdownMenu.Show(Button1, mDropdownMenu.Width - Button1.Width, Button1.Height)
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        DropdownMenu1.Show(Button2, Button2.Width, 0)
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        DropdownMenu2.Show(Button3, DropdownMenu2.Width - Button3.Width, Button3.Height)
+    End Sub
+End Class

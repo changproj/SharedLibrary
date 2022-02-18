@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Helper.CrystalHelper">
+    <Position X="1" Y="0.75" Width="2" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="RpViewer.RpReport">
+    <Position X="4.5" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ARAQAAAICCAAAQCgBALABEACAgAAAAAAAAAAAAAERAI=</HashCode>
+      <FileName>RpReport.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Helper.CompareHelper">
+    <Position X="0.5" Y="5" Width="1.75" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Helper.FieldHelper">
+    <Position X="2.5" Y="5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Helper.TextBuilder">
+    <Position X="7.75" Y="0.75" Width="1.75" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Helper.SelectionBuilder">
+    <Position X="7.5" Y="4.75" Width="1.5" />
+    <InheritanceLine Type="Helper.TextBuilder" FixedToPoint="true">
+      <Path>
+        <Point X="8.625" Y="4.103" />
+        <Point X="8.625" Y="4.375" />
+        <Point X="8.188" Y="4.375" />
+        <Point X="8.188" Y="4.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Helper.FilterBuilder">
+    <Position X="9.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="Helper.SelectionHelper">
+    <Position X="9.75" Y="0.75" Width="2" />
+    <TypeIdentifier />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
