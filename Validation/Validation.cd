@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Validation.BrokenRule">
+    <Position X="6.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAABAAgAAAgAAAEAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BrokenRule.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Validation.BrokenRulesCollection">
+    <Position X="8.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAEIAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BrokenRulesCollection.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Validation.ReadOnlyBindingList(Of C)">
+    <Position X="8.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAABAAQAAAAAAAAQCAAAAAEIAAAAAAAAAA=</HashCode>
+      <FileName>ReadOnlyBindingList.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Validation.RuleMethod">
+    <Position X="2.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAhAAAAAAIAAAEAAEAAAAARAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>RuleMethod.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Validation.ValidationRules">
+    <Position X="4.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAACAAAAgAAAIIAgAAABAgAAgAABAAgAA=</HashCode>
+      <FileName>ValidationRules.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Delegate Name="Validation.RuleHandler">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>RuleHandler.vb</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Module Name="Validation.CommonRules">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="Validation.CommonRules.MaxLengthRuleArgs" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>CommonRules.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Validation.CommonRules.IntegerMaxValueRuleArgs" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>CommonRules.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Validation.CommonRules.IntegerMinValueRuleArgs" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>CommonRules.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Validation.CommonRules.MaxValueRuleArgs(Of T)" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>CommonRules.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Validation.CommonRules.MinValueRuleArgs(Of T)" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>CommonRules.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Enum Name="Validation.CommonRules.RegExPatterns" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>CommonRules.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Class Name="Validation.CommonRules.RegExRuleArgs" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>CommonRules.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAAAAgAAAAACAAAAAAAAAAAgAAgEAAAgSA=</HashCode>
+      <FileName>CommonRules.vb</FileName>
+    </TypeIdentifier>
+  </Module>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

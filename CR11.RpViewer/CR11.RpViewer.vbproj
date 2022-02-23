@@ -81,9 +81,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\GeneralAccXP\RpViewer\bin\Debug\CrystalDecisions.Windows.Forms.dll</HintPath>
     </Reference>
-    <Reference Include="Helper">
-      <HintPath>..\Helper\bin\Debug\Helper.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -159,6 +156,10 @@
     <ProjectReference Include="..\CR11.CrystalHelper\CR11.CrystalHelper.vbproj">
       <Project>{ca61ac99-08dc-4cfa-93b8-4ffd50998f20}</Project>
       <Name>CR11.CrystalHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Helper\Helper.vbproj">
+      <Project>{e4e5de65-b390-4dd9-b1a5-301fa2c89616}</Project>
+      <Name>Helper</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
