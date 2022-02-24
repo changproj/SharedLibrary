@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CompanyMaster.AppSystem">
+    <Position X="5.5" Y="0.5" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="CompanyMaster.AppSystem.StoreProcedures">
+        <TypeIdentifier>
+          <NewMemberFileName>DataEntity\AppSystem.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="CompanyMaster.AppSystem.DbFields" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataEntity\AppSystem.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="CompanyMaster.AppSystem.Properties" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataEntity\AppSystem.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAIABAAAhEgAACAAAIIAQIAAACAAAAAAAIAAAECAE=</HashCode>
+      <FileName>DataEntity\AppSystem.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CompanyMaster.DataEntity.CompanyMaster">
+    <Position X="0.75" Y="0.5" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="CompanyMaster.DataEntity.CompanyMaster.StoreProcedures">
+        <TypeIdentifier>
+          <NewMemberFileName>DataEntity\CompanyMaster.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="CompanyMaster.DataEntity.CompanyMaster.DbFields" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataEntity\CompanyMaster.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="CompanyMaster.DataEntity.CompanyMaster.Properties" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataEntity\CompanyMaster.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>CEQEMQBQgClEggDaGACYoEWIJDMmBAinAmEKhGAEiIM=</HashCode>
+      <FileName>DataEntity\CompanyMaster.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CompanyMaster.DataEntity.CompanySystem">
+    <Position X="3.25" Y="0.5" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="CompanyMaster.DataEntity.CompanySystem.StoreProcedures">
+        <TypeIdentifier>
+          <NewMemberFileName>DataEntity\CompanySystem.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="CompanyMaster.DataEntity.CompanySystem.DbFields" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataEntity\CompanySystem.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="CompanyMaster.DataEntity.CompanySystem.Properties" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataEntity\CompanySystem.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AEAEMABQAAlEAACCCACYAACIFCEmAAAgAiAIAEAACAM=</HashCode>
+      <FileName>DataEntity\CompanySystem.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CompanyMaster.DataEntity.CompanyTax">
+    <Position X="7.75" Y="0.5" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="CompanyMaster.DataEntity.CompanyTax.StoreProcedures">
+        <TypeIdentifier>
+          <NewMemberFileName>DataEntity\CompanyTax.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="CompanyMaster.DataEntity.CompanyTax.DbFields" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataEntity\CompanyTax.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="CompanyMaster.DataEntity.CompanyTax.Properties" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DataEntity\CompanyTax.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQAIABAAAhEAAACAAAIAAAIEDACBAAAAAEIAAAAiAE=</HashCode>
+      <FileName>DataEntity\CompanyTax.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Helper.DataEntity.DataEntityBase">
+    <Position X="4.75" Y="13.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Helper.DataEntity.DataEntityBase.StoreProcedures" Collapsed="true">
+        <TypeIdentifier />
+      </Enum>
+      <Enum Name="Helper.DataEntity.DataEntityBase.DbFields" Collapsed="true">
+        <TypeIdentifier />
+      </Enum>
+      <Enum Name="Helper.DataEntity.DataEntityBase.Properties" Collapsed="true">
+        <TypeIdentifier />
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

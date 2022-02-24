@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DataAccess.DatabaseBuilder">
+    <Position X="0.75" Y="0.5" Width="1.75" />
+    <NestedTypes>
+      <Enum Name="DataAccess.DatabaseBuilder.ProviderType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DatabaseBuilder.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>kIAIAIAAAQgkEEIUBBAgEAACIAgAAABAAAJAAFAAgAA=</HashCode>
+      <FileName>DatabaseBuilder.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DataAccess.SqlClientBuilder">
+    <Position X="3.25" Y="2" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>kKAIAIAAAAAgAEAQBACAEAACIAgAQAAAAAAAABAABAA=</HashCode>
+      <FileName>SqlClientBuilder.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataAccess.OleDbBuilder">
+    <Position X="5.75" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>kKAIAIAAAAAgAEAQBAAAEAgCIAgAQAAAAAAAABAABAA=</HashCode>
+      <FileName>OleDbBuilder.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataAccess.OdbcBuilder">
+    <Position X="8.25" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>kKAIAIAAAAAgAEAQBAAAEAACIAgAQAAAAAAAABAABAA=</HashCode>
+      <FileName>OdbcBuilder.vb</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

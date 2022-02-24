@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Helper.DataEntity.DataEntityBase">
+    <Position X="2.25" Y="0.75" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Helper.DataEntity.DataEntityBase.StoreProcedures" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Base\DataEntity\DataEntityBase.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="Helper.DataEntity.DataEntityBase.DbFields" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Base\DataEntity\DataEntityBase.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="Helper.DataEntity.DataEntityBase.Properties" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Base\DataEntity\DataEntityBase.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAABAAABAEAgIAECIgAAAAAgIAAABAECACBA=</HashCode>
+      <FileName>Base\DataEntity\DataEntityBase.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Helper.IDataEntity">
+    <Position X="5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Base\DataEntity\IDataEntity.vb</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

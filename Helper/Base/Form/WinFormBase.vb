@@ -1,5 +1,4 @@
-﻿Imports System.ComponentModel.DataAnnotations
-Imports System.Drawing
+﻿Imports System.Drawing
 Imports System.Windows.Forms
 Imports Helper.DataEntity
 
@@ -38,6 +37,7 @@ Public Class WinFormBase
 #Region "Properties"
     Public Sub New()
         AddFormFlagHandlers()
+        InitializeComponent()
     End Sub
     Protected ReadOnly Property FormState() As EnumFormState
         Get
@@ -395,22 +395,22 @@ Public Class WinFormBase
         Return errorMsg
     End Function
 
-    Protected Function GetDisplayName(Of T)() As Dictionary(Of String, String)
-        Dim properties = GetType(T).GetProperties(Reflection.BindingFlags.Instance Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Public)
-        For Each Prop As Reflection.PropertyInfo In properties
-            Dim attributes = DirectCast(Prop.GetCustomAttributes(GetType(DisplayAttribute), False), DisplayAttribute())
-            If attributes.Any Then
-                If _PropertyDescription.ContainsKey(Prop.Name) = False Then
-                    _PropertyDescription.Add(Prop.Name, attributes(0).Name)
-                End If
-            End If
-        Next
-        Return _PropertyDescription
-    End Function
-    Protected Function ReplacePropNameWithDisplayName(Of T)(ByVal propName As String, ByVal errorMsg As String) As String
-        errorMsg = errorMsg.Replace(propName, GetDisplayName(Of T)().Item(propName))
-        Return errorMsg
-    End Function
+    'Protected Function GetDisplayName(Of T)() As Dictionary(Of String, String)
+    '    Dim properties = GetType(T).GetProperties(Reflection.BindingFlags.Instance Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Public)
+    '    For Each Prop As Reflection.PropertyInfo In properties
+    '        Dim attributes = DirectCast(Prop.GetCustomAttributes(GetType(DisplayAttribute), False), DisplayAttribute())
+    '        If attributes.Any Then
+    '            If _PropertyDescription.ContainsKey(Prop.Name) = False Then
+    '                _PropertyDescription.Add(Prop.Name, attributes(0).Name)
+    '            End If
+    '        End If
+    '    Next
+    '    Return _PropertyDescription
+    'End Function
+    'Protected Function ReplacePropNameWithDisplayName(Of T)(ByVal propName As String, ByVal errorMsg As String) As String
+    '    errorMsg = errorMsg.Replace(propName, GetDisplayName(Of T)().Item(propName))
+    '    Return errorMsg
+    'End Function
     Protected Function CheckSetting(Of T)(ByVal key As String) As Object
         If Settings Is Nothing Then Return Nothing
         Dim mObj As Object = Settings.Where(Function(a) a.ckey = key).FirstOrDefault

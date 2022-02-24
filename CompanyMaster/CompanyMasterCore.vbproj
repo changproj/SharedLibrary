@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E4E5DE65-B390-4DD9-B1A5-301FA2C89616}</ProjectGuid>
+    <ProjectGuid>{4700DF1E-C199-42BE-A7E7-39567ED371C2}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Helper</RootNamespace>
-    <AssemblyName>Helper</AssemblyName>
+    <RootNamespace>CompanyMasterCore</RootNamespace>
+    <AssemblyName>CompanyMasterCore</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
@@ -19,7 +19,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Helper.xml</DocumentationFile>
+    <DocumentationFile>CompanyMasterCore.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,7 +28,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Helper.xml</DocumentationFile>
+    <DocumentationFile>CompanyMasterCore.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -58,7 +58,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.IO, Version=2.6.8.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.1.1.8\lib\net40\System.IO.dll</HintPath>
       <Private>True</Private>
@@ -72,7 +71,6 @@
       <HintPath>..\packages\Microsoft.Bcl.1.1.8\lib\net40\System.Threading.Tasks.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -90,32 +88,14 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationTools.vb" />
-    <Compile Include="Base\DataEntityMgr\DataEntityMgrBase.vb" />
-    <Compile Include="Base\DataEntityMgr\IDataEntityMgr.vb" />
-    <Compile Include="Base\DataEntityMgr\MgrArgs.vb" />
-    <Compile Include="Base\DataEntity\DataEntityBase.vb" />
-    <Compile Include="Base\DataEntity\IDataEntity.vb" />
-    <Compile Include="Base\Form\WinFormBase.designer.vb">
-      <DependentUpon>WinFormBase.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Base\Form\WinFormBase.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CompareHelper.vb" />
-    <Compile Include="CustomizedCtrl\MyDGV.Designer.vb">
-      <DependentUpon>MyDGV.vb</DependentUpon>
-    </Compile>
-    <Compile Include="CustomizedCtrl\MyDGV.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="CustomizedCtrl\WaterMarkTextBox.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="FieldHelper.vb" />
-    <Compile Include="FileHelper.vb" />
-    <Compile Include="IniHelper.vb" />
-    <Compile Include="KeyValueHelper.vb" />
+    <Compile Include="DataEntityMgr\AppSystemMgr.vb" />
+    <Compile Include="DataEntityMgr\CompanyMasterMgr.vb" />
+    <Compile Include="DataEntityMgr\CompanySystemMgr.vb" />
+    <Compile Include="DataEntityMgr\CompanyTaxMgr.vb" />
+    <Compile Include="DataEntity\AppSystem.vb" />
+    <Compile Include="DataEntity\CompanyMaster.vb" />
+    <Compile Include="DataEntity\CompanySystem.vb" />
+    <Compile Include="DataEntity\CompanyTax.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -131,8 +111,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="TextBuilder.vb" />
-    <Compile Include="ThemeColor.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -144,7 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Base\DataEntity\Diagram\DataEntity.cd" />
+    <None Include="DataEntity\Diagram\DataEntity.cd" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -156,11 +134,17 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DataEntityMgr\Diagram\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccess\DataAccess.vbproj">
-      <Project>{6D4FC5DD-E0C3-4F41-914C-9A460BCCA5D4}</Project>
+      <Project>{6d4fc5dd-e0c3-4f41-914c-9a460bcca5d4}</Project>
       <Name>DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Helper\Helper.vbproj">
+      <Project>{e4e5de65-b390-4dd9-b1a5-301fa2c89616}</Project>
+      <Name>Helper</Name>
     </ProjectReference>
     <ProjectReference Include="..\Validation\Validation.vbproj">
       <Project>{fe3307b9-1435-441e-85b4-0ccc87b95c2f}</Project>
