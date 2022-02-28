@@ -468,7 +468,7 @@ Namespace DataAccess
                 _hasCompleted = False
 
                 'Long Process
-                Dim mTask As Task(Of SqlDataReader) = New Task(Of SqlDataReader)(Function() _command.ExecuteReader(CommandBehavior.CloseConnection))
+                Dim mTask As Task(Of IDataReader) = New Task(Of IDataReader)(Function() _command.ExecuteReader(CommandBehavior.CloseConnection))
                 mTask.Start()
 
                 _dataReader = Await mTask

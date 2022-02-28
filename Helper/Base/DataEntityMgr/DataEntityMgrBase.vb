@@ -1,6 +1,7 @@
 Imports System.ComponentModel
 Imports System.Reflection
 Imports DataAccess
+Imports DataAccess.DatabaseBuilder
 Imports Validation
 
 Public MustInherit Class DataEntityMgrBase(Of T)
@@ -20,11 +21,19 @@ Public MustInherit Class DataEntityMgrBase(Of T)
 #End Region
 
 #Region "Constructor"
-    Public Sub New(ByVal connstr As String, ByVal dataEntity As T)
+    Public Sub New(ByVal connstr As String, ByVal dataEntity As T, ByVal Optional ProviderType As ProviderType = ProviderType.SqlClient)
         _connstr = connstr
         _dataEntity = dataEntity
         _dataEntityList = New List(Of T)
-        '_databaseBuilder = New SqlClientBuilder(connstr) 'assign New SqlClientBuilder(connstr) in children
+
+        Select Case ProviderType
+            Case ProviderType.SqlClient
+                _databaseBuilder = New SqlClientBuilder(connstr)
+            Case ProviderType.Odbc
+                _databaseBuilder = New OdbcBuilder(connstr)
+            Case ProviderType.OleDb
+                _databaseBuilder = New OleDbBuilder(connstr)
+        End Select
     End Sub
 #End Region
 

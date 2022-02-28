@@ -1,5 +1,6 @@
 Imports CompanyMasterCore.DataEntity
 Imports DataAccess
+Imports DataAccess.DatabaseBuilder
 Imports Helper
 Imports Helper.ApplicationTools
 Imports Validation
@@ -23,8 +24,8 @@ Namespace DataEntityMgr
 #End Region
 
 #Region "Constructor"
-        Public Sub New(ByVal connstr As String)
-            MyBase.New(connstr, New CompanyMaster)
+        Public Sub New(ByVal connstr As String, ByVal Optional ProviderType As ProviderType = ProviderType.SqlClient)
+            MyBase.New(connstr, New CompanyMaster, ProviderType)
         End Sub
         Public Sub New(ByVal connstr As String, ByVal companyMaster As CompanyMaster)
             MyBase.New(connstr, companyMaster)
@@ -238,6 +239,97 @@ Namespace DataEntityMgr
                 End With
 
                 Using mDataReader As IDataReader = DataBaseBuilder.GetdataReader(CompanyMaster.StoreProcedures.spCompanyMaster_Get.ToString)
+                    If DataBaseBuilder.ErrorMsg IsNot Nothing Then
+                        Throw New Exception(DataBaseBuilder.ErrorMsg)
+                    End If
+
+                    While mDataReader.Read
+                        obj = New CompanyMaster
+                        With obj
+                            .ID = SafeField(mDataReader(CompanyMaster.DbFields.Co_ID.ToString))
+                            .Name = SafeField(mDataReader(CompanyMaster.DbFields.Co_Name.ToString))
+                            .RegNo = SafeField(mDataReader(CompanyMaster.DbFields.Co_RegNo.ToString))
+                            .Branch = SafeField(mDataReader(CompanyMaster.DbFields.Co_Branch.ToString))
+                            .Address = SafeField(mDataReader(CompanyMaster.DbFields.Co_Address.ToString))
+                            .City = SafeField(mDataReader(CompanyMaster.DbFields.Co_City.ToString))
+                            .Postcode = SafeField(mDataReader(CompanyMaster.DbFields.Co_Postcode.ToString))
+                            .State = SafeField(mDataReader(CompanyMaster.DbFields.Co_State.ToString))
+                            .Country = SafeField(mDataReader(CompanyMaster.DbFields.Co_Country.ToString))
+                            .Tel = SafeField(mDataReader(CompanyMaster.DbFields.Co_Tel.ToString))
+                            .Fax = SafeField(mDataReader(CompanyMaster.DbFields.Co_Fax.ToString))
+                            .Email = SafeField(mDataReader(CompanyMaster.DbFields.Co_Email.ToString))
+                            .CoGroup = SafeField(mDataReader(CompanyMaster.DbFields.Co_CoGroup.ToString))
+                            .Level = SafeField(mDataReader(CompanyMaster.DbFields.Co_Level.ToString))
+                            .HasChildrenOf = SafeField(mDataReader(CompanyMaster.DbFields.Co_HasChildrenOf.ToString))
+                            .Active = SafeField(mDataReader(CompanyMaster.DbFields.Co_Active.ToString))
+                            .CreatedBy = SafeField(mDataReader(CompanyMaster.DbFields.Co_CreatedBy.ToString))
+                            .CreatedOn = SafeField(mDataReader(CompanyMaster.DbFields.Co_CreatedOn.ToString))
+                            .EditedBy = SafeField(mDataReader(CompanyMaster.DbFields.Co_EditedBy.ToString))
+                            .EditedOn = SafeField(mDataReader(CompanyMaster.DbFields.Co_EditedOn.ToString))
+                            .GSTNo = SafeField(mDataReader(CompanyMaster.DbFields.Co_GSTNo.ToString))
+                            .SalesTaxNo = SafeField(mDataReader(CompanyMaster.DbFields.Co_SalesTaxNo.ToString))
+                            .ServiceTaxNo = SafeField(mDataReader(CompanyMaster.DbFields.Co_ServiceTaxNo.ToString))
+                            .DbName = SafeField(mDataReader(CompanyMaster.DbFields.Co_DbName.ToString))
+                            .ServerName = SafeField(mDataReader(CompanyMaster.DbFields.Co_ServerName.ToString))
+                            .ConnectionString = SafeField(mDataReader(CompanyMaster.DbFields.Co_ConnectionString.ToString))
+                            .ServerPath = SafeField(mDataReader(CompanyMaster.DbFields.Co_ServerPath.ToString))
+                            .BackupPath1 = SafeField(mDataReader(CompanyMaster.DbFields.Co_BackupPath1.ToString))
+                            .BackupPath2 = SafeField(mDataReader(CompanyMaster.DbFields.Co_BackupPath2.ToString))
+                            .ExportPath1 = SafeField(mDataReader(CompanyMaster.DbFields.Co_ExportPath1.ToString))
+                            .ExportPath2 = SafeField(mDataReader(CompanyMaster.DbFields.Co_ExportPath2.ToString))
+                            .ExportPath3 = SafeField(mDataReader(CompanyMaster.DbFields.Co_ExportPath3.ToString))
+                            .IsSysActive = SafeField(mDataReader(CompanyMaster.DbFields.Co_IsSysActive.ToString))
+                            .SysID = SafeField(mDataReader(CompanyMaster.DbFields.Co_SysID.ToString))
+                            .ObjectState = EnumObjectState.Unchanged
+
+                            If IncludeCompanyList.Any Then
+                                If IncludeCompanyList.Exists(Function(a) a = .ID) = False Then Continue While
+                            End If
+                        End With
+                        objcol.Add(obj)
+                    End While
+                End Using
+                SetDataEntityList(objcol)
+            Catch ex As Exception
+                DataEntity.ErrorMsg = ex.Message
+                Throw New Exception(ex.Message)
+            End Try
+            Return Me
+        End Function
+        Public Overrides Async Function FetchAsync(ByVal DataBusinessParams As MgrArgs) As Task(Of IDataEntityMgr(Of CompanyMaster))
+            Dim objcol As New List(Of CompanyMaster)
+            Dim obj As CompanyMaster
+            Try
+                With DataBaseBuilder
+                    .CreateCommandParameters(CompanyMaster.Properties.ID.ToString, DataEntity.ID)
+                    .CreateCommandParameters(CompanyMaster.Properties.Name.ToString, DataEntity.Name)
+                    .CreateCommandParameters(CompanyMaster.Properties.RegNo.ToString, DataEntity.RegNo)
+                    .CreateCommandParameters(CompanyMaster.Properties.Branch.ToString, DataEntity.Branch)
+                    .CreateCommandParameters(CompanyMaster.Properties.Address.ToString, DataEntity.Address)
+                    .CreateCommandParameters(CompanyMaster.Properties.City.ToString, DataEntity.City)
+                    .CreateCommandParameters(CompanyMaster.Properties.Postcode.ToString, DataEntity.Postcode)
+                    .CreateCommandParameters(CompanyMaster.Properties.State.ToString, DataEntity.State)
+                    .CreateCommandParameters(CompanyMaster.Properties.Country.ToString, DataEntity.Country)
+                    .CreateCommandParameters(CompanyMaster.Properties.Tel.ToString, DataEntity.Tel)
+                    .CreateCommandParameters(CompanyMaster.Properties.Fax.ToString, DataEntity.Fax)
+                    .CreateCommandParameters(CompanyMaster.Properties.Email.ToString, DataEntity.Email)
+                    .CreateCommandParameters(CompanyMaster.Properties.CoGroup.ToString, DataEntity.CoGroup)
+                    .CreateCommandParameters(CompanyMaster.Properties.Level.ToString, DataEntity.Level)
+                    .CreateCommandParameters(CompanyMaster.Properties.HasChildrenOf.ToString, DataEntity.HasChildrenOf)
+                    .CreateCommandParameters(CompanyMaster.Properties.Active.ToString, DataEntity.Active)
+                    .CreateCommandParameters(CompanyMaster.Properties.CreatedBy.ToString, DataEntity.CreatedBy)
+                    .CreateCommandParameters(CompanyMaster.Properties.CreatedOn.ToString, DataEntity.CreatedOn)
+                    .CreateCommandParameters(CompanyMaster.Properties.EditedBy.ToString, DataEntity.EditedBy)
+                    .CreateCommandParameters(CompanyMaster.Properties.EditedOn.ToString, DataEntity.EditedOn)
+                    .CreateCommandParameters(CompanyMaster.Properties.GSTNo.ToString, DataEntity.GSTNo)
+                    .CreateCommandParameters(CompanyMaster.Properties.SalesTaxNo.ToString, DataEntity.SalesTaxNo)
+                    .CreateCommandParameters(CompanyMaster.Properties.ServiceTaxNo.ToString, DataEntity.ServiceTaxNo)
+                    .CreateCommandParameters(CompanyMaster.Properties.SysID.ToString, DataEntity.SysID)         'Fixed value to be passed from FrmLogin
+                    .CreateCommandParameters("SortField", DataBusinessParams.GetOrderBy)
+                    .CreateCommandParameters("IsLike", DataBusinessParams.OptionList.IsLike)
+                End With
+
+                Using mDataReader As IDataReader = Await DataBaseBuilder.GetdataReaderAsync(CompanyMaster.StoreProcedures.spCompanyMaster_Get.ToString)
                     If DataBaseBuilder.ErrorMsg IsNot Nothing Then
                         Throw New Exception(DataBaseBuilder.ErrorMsg)
                     End If
