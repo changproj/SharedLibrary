@@ -155,6 +155,38 @@ Namespace DataEntityMgr
                 DataEntity.ErrorMsg = e.Message
             End Try
         End Sub
+        Public Overrides Async Function AddAsync() As Task
+            With DataBaseBuilder
+                .CreateCommandParameters(CompanyMaster.Properties.ID.ToString, DataEntity.ID)
+                .CreateCommandParameters(CompanyMaster.Properties.Name.ToString, DataEntity.Name)
+                .CreateCommandParameters(CompanyMaster.Properties.RegNo.ToString, DataEntity.RegNo)
+                .CreateCommandParameters(CompanyMaster.Properties.Branch.ToString, DataEntity.Branch)
+                .CreateCommandParameters(CompanyMaster.Properties.Address.ToString, DataEntity.Address)
+                .CreateCommandParameters(CompanyMaster.Properties.City.ToString, DataEntity.City)
+                .CreateCommandParameters(CompanyMaster.Properties.Postcode.ToString, DataEntity.Postcode)
+                .CreateCommandParameters(CompanyMaster.Properties.State.ToString, DataEntity.State)
+                .CreateCommandParameters(CompanyMaster.Properties.Country.ToString, DataEntity.Country)
+                .CreateCommandParameters(CompanyMaster.Properties.Tel.ToString, DataEntity.Tel)
+                .CreateCommandParameters(CompanyMaster.Properties.Fax.ToString, DataEntity.Fax)
+                .CreateCommandParameters(CompanyMaster.Properties.Email.ToString, DataEntity.Email)
+                .CreateCommandParameters(CompanyMaster.Properties.Active.ToString, DataEntity.Active)
+                .CreateCommandParameters(CompanyMaster.Properties.CoGroup.ToString, DataEntity.CoGroup)
+                .CreateCommandParameters(CompanyMaster.Properties.CreatedBy.ToString, DataEntity.CreatedBy)
+                .CreateCommandParameters(CompanyMaster.Properties.CreatedOn.ToString, DataEntity.CreatedOn)
+                .CreateCommandParameters(CompanyMaster.Properties.EditedBy.ToString, DataEntity.EditedBy)
+                .CreateCommandParameters(CompanyMaster.Properties.EditedOn.ToString, DataEntity.EditedOn)
+            End With
+            Try
+                Await DataBaseBuilder.SaveChangesAsync(CompanyMaster.StoreProcedures.spCompanyMaster_Insert.ToString, CommandType.StoredProcedure)
+                If DataBaseBuilder.ErrorMsg IsNot Nothing Then
+                    Throw New Exception(DataBaseBuilder.ErrorMsg)
+                Else
+                    DataEntity.ObjectState = EnumObjectState.Unchanged
+                End If
+            Catch e As System.Exception
+                DataEntity.ErrorMsg = e.Message
+            End Try
+        End Function
         Public Overrides Sub Update()
             With DataBaseBuilder
                 .CreateCommandParameters(CompanyMaster.Properties.ID.ToString, DataEntity.ID)
@@ -187,6 +219,38 @@ Namespace DataEntityMgr
                 DataEntity.ErrorMsg = e.Message
             End Try
         End Sub
+        Public Overrides Async Function UpdateAsync() As Task
+            With DataBaseBuilder
+                .CreateCommandParameters(CompanyMaster.Properties.ID.ToString, DataEntity.ID)
+                .CreateCommandParameters(CompanyMaster.Properties.Name.ToString, DataEntity.Name)
+                .CreateCommandParameters(CompanyMaster.Properties.RegNo.ToString, DataEntity.RegNo)
+                .CreateCommandParameters(CompanyMaster.Properties.Branch.ToString, DataEntity.Branch)
+                .CreateCommandParameters(CompanyMaster.Properties.Address.ToString, DataEntity.Address)
+                .CreateCommandParameters(CompanyMaster.Properties.City.ToString, DataEntity.City)
+                .CreateCommandParameters(CompanyMaster.Properties.Postcode.ToString, DataEntity.Postcode)
+                .CreateCommandParameters(CompanyMaster.Properties.State.ToString, DataEntity.State)
+                .CreateCommandParameters(CompanyMaster.Properties.Country.ToString, DataEntity.Country)
+                .CreateCommandParameters(CompanyMaster.Properties.Tel.ToString, DataEntity.Tel)
+                .CreateCommandParameters(CompanyMaster.Properties.Fax.ToString, DataEntity.Fax)
+                .CreateCommandParameters(CompanyMaster.Properties.Email.ToString, DataEntity.Email)
+                .CreateCommandParameters(CompanyMaster.Properties.Active.ToString, DataEntity.Active)
+                .CreateCommandParameters(CompanyMaster.Properties.CoGroup.ToString, DataEntity.CoGroup)
+                .CreateCommandParameters(CompanyMaster.Properties.CreatedBy.ToString, DataEntity.CreatedBy)
+                .CreateCommandParameters(CompanyMaster.Properties.CreatedOn.ToString, DataEntity.CreatedOn)
+                .CreateCommandParameters(CompanyMaster.Properties.EditedBy.ToString, DataEntity.EditedBy)
+                .CreateCommandParameters(CompanyMaster.Properties.EditedOn.ToString, DataEntity.EditedOn)
+            End With
+            Try
+                Await DataBaseBuilder.SaveChangesAsync(CompanyMaster.StoreProcedures.spCompanyMaster_Update.ToString, CommandType.StoredProcedure)
+                If DataBaseBuilder.ErrorMsg IsNot Nothing Then
+                    Throw New Exception(DataBaseBuilder.ErrorMsg)
+                Else
+                    DataEntity.ObjectState = EnumObjectState.Unchanged
+                End If
+            Catch e As System.Exception
+                DataEntity.ErrorMsg = e.Message
+            End Try
+        End Function
         Public Overrides Sub Delete()
             Dim mProcRetValue As IDataParameter
             With DataBaseBuilder
@@ -205,6 +269,24 @@ Namespace DataEntityMgr
                 DataEntity.ErrorMsg = e.Message
             End Try
         End Sub
+        Public Overrides Async Function DeleteAsync() As Task
+            Dim mProcRetValue As IDataParameter
+            With DataBaseBuilder
+                .CreateCommandParameters(CompanyMaster.Properties.ID.ToString, DataEntity.ID)
+                mProcRetValue = .CreateCommandParametersExplicit("ErrMsg", DbType.String, ParameterDirection.Output)
+            End With
+            Try
+                Dim i As Integer = Await DataBaseBuilder.SaveChangesAsync(CompanyMaster.StoreProcedures.spCompanyMaster_Delete.ToString, CommandType.StoredProcedure)
+                If DataBaseBuilder.ErrorMsg IsNot Nothing Then
+                    Throw New Exception(DataBaseBuilder.ErrorMsg)
+                End If
+                If i < 0 Then
+                    DataEntity.ErrorMsg = mProcRetValue.Value    'return error
+                End If
+            Catch e As System.Exception
+                DataEntity.ErrorMsg = e.Message
+            End Try
+        End Function
         Public Overrides Function Fetch(ByVal DataBusinessParams As MgrArgs) As IDataEntityMgr(Of CompanyMaster)
             Dim objcol As New List(Of CompanyMaster)
             Dim obj As CompanyMaster

@@ -157,7 +157,7 @@ Namespace DataAccess
                     'Long Process
                     Dim mTask As Task(Of Integer) = New Task(Of Integer)(Function() _command.ExecuteNonQuery)
                     mTask.Start()
-                    Dim mCnt As Int32 = Await mTask
+                    Dim mCnt As Integer = Await mTask
 
                     _errMsg = Nothing
                     mTransaction.Commit()
