@@ -109,6 +109,28 @@ Namespace DataEntityMgr
                 DataEntity.ErrorMsg = e.Message
             End Try
         End Sub
+        Public Overrides Async Function AddAsync() As Task
+            With DataBaseBuilder
+                .CreateCommandParameters(CompanyTax.Properties.CoID.ToString, DataEntity.CoID)
+                .CreateCommandParameters(CompanyTax.Properties.GSTNo.ToString, DataEntity.GSTNo)
+                .CreateCommandParameters(CompanyTax.Properties.SalesTaxNo.ToString, DataEntity.SalesTaxNo)
+                .CreateCommandParameters(CompanyTax.Properties.ServiceTaxNo.ToString, DataEntity.ServiceTaxNo)
+                .CreateCommandParameters(CompanyTax.Properties.CreatedBy.ToString, DataEntity.CreatedBy)
+                .CreateCommandParameters(CompanyTax.Properties.CreatedOn.ToString, DataEntity.CreatedOn)
+                .CreateCommandParameters(CompanyTax.Properties.EditedBy.ToString, DataEntity.EditedBy)
+                .CreateCommandParameters(CompanyTax.Properties.EditedOn.ToString, DataEntity.EditedOn)
+            End With
+            Try
+                Await DataBaseBuilder.SaveChangesAsync(CompanyTax.StoreProcedures.spCompanyTax_Insert.ToString, CommandType.StoredProcedure)
+                If DataBaseBuilder.ErrorMsg IsNot Nothing Then
+                    Throw New Exception(DataBaseBuilder.ErrorMsg)
+                Else
+                    DataEntity.ObjectState = EnumObjectState.Unchanged
+                End If
+            Catch e As System.Exception
+                DataEntity.ErrorMsg = e.Message
+            End Try
+        End Function
         Public Overrides Sub Update()
             With DataBaseBuilder
                 .CreateCommandParameters(CompanyTax.Properties.CoID.ToString, DataEntity.CoID)
@@ -131,6 +153,28 @@ Namespace DataEntityMgr
                 DataEntity.ErrorMsg = e.Message
             End Try
         End Sub
+        Public Overrides Async Function UpdateAsync() As Task
+            With DataBaseBuilder
+                .CreateCommandParameters(CompanyTax.Properties.CoID.ToString, DataEntity.CoID)
+                .CreateCommandParameters(CompanyTax.Properties.GSTNo.ToString, DataEntity.GSTNo)
+                .CreateCommandParameters(CompanyTax.Properties.SalesTaxNo.ToString, DataEntity.SalesTaxNo)
+                .CreateCommandParameters(CompanyTax.Properties.ServiceTaxNo.ToString, DataEntity.ServiceTaxNo)
+                .CreateCommandParameters(CompanyTax.Properties.CreatedBy.ToString, DataEntity.CreatedBy)
+                .CreateCommandParameters(CompanyTax.Properties.CreatedOn.ToString, DataEntity.CreatedOn)
+                .CreateCommandParameters(CompanyTax.Properties.EditedBy.ToString, DataEntity.EditedBy)
+                .CreateCommandParameters(CompanyTax.Properties.EditedOn.ToString, DataEntity.EditedOn)
+            End With
+            Try
+                Await DataBaseBuilder.SaveChangesAsync(CompanyTax.StoreProcedures.spCompanyTax_Update.ToString, CommandType.StoredProcedure)
+                If DataBaseBuilder.ErrorMsg IsNot Nothing Then
+                    Throw New Exception(DataBaseBuilder.ErrorMsg)
+                Else
+                    DataEntity.ObjectState = EnumObjectState.Unchanged
+                End If
+            Catch e As System.Exception
+                DataEntity.ErrorMsg = e.Message
+            End Try
+        End Function
         Public Overrides Sub Delete()
             Dim mProcRetValue As IDataParameter
             With DataBaseBuilder
@@ -149,6 +193,24 @@ Namespace DataEntityMgr
                 DataEntity.ErrorMsg = e.Message
             End Try
         End Sub
+        Public Overrides Async Function DeleteAsync() As Task
+            Dim mProcRetValue As IDataParameter
+            With DataBaseBuilder
+                .CreateCommandParameters(CompanyTax.Properties.CoID.ToString, DataEntity.CoID)
+                mProcRetValue = .CreateCommandParametersExplicit("ErrMsg", DbType.String, ParameterDirection.Output)
+            End With
+            Try
+                Dim i As Integer = Await DataBaseBuilder.SaveChangesAsync(CompanyTax.StoreProcedures.spCompanyTax_Delete.ToString, CommandType.StoredProcedure)
+                If DataBaseBuilder.ErrorMsg IsNot Nothing Then
+                    Throw New Exception(DataBaseBuilder.ErrorMsg)
+                End If
+                If i < 0 Then
+                    DataEntity.ErrorMsg = mProcRetValue.Value    'return error
+                End If
+            Catch e As System.Exception
+                DataEntity.ErrorMsg = e.Message
+            End Try
+        End Function
         Public Overrides Function Fetch(ByVal DataBusinessParams As MgrArgs) As IDataEntityMgr(Of CompanyTax)
             Dim objcol As New List(Of CompanyTax)
             Dim obj As CompanyTax
@@ -163,6 +225,47 @@ Namespace DataEntityMgr
                 End With
 
                 Using mDataReader As IDataReader = DataBaseBuilder.GetdataReader(CompanyTax.StoreProcedures.spCompanyTax_Get.ToString)
+                    If DataBaseBuilder.ErrorMsg IsNot Nothing Then
+                        Throw New Exception(DataBaseBuilder.ErrorMsg)
+                    End If
+
+                    While mDataReader.Read
+                        obj = New CompanyTax
+                        With obj
+                            .CoID = SafeField(mDataReader(CompanyTax.DbFields.Ct_CoID.ToString))
+                            .GSTNo = SafeField(mDataReader(CompanyTax.DbFields.Ct_GSTNo.ToString))
+                            .SalesTaxNo = SafeField(mDataReader(CompanyTax.DbFields.Ct_SalesTaxNo.ToString))
+                            .ServiceTaxNo = SafeField(mDataReader(CompanyTax.DbFields.Ct_ServiceTaxNo.ToString))
+                            .CreatedBy = SafeField(mDataReader(CompanyTax.DbFields.Ct_CreatedBy.ToString))
+                            .CreatedOn = SafeField(mDataReader(CompanyTax.DbFields.Ct_CreatedOn.ToString))
+                            .EditedBy = SafeField(mDataReader(CompanyTax.DbFields.Ct_EditedBy.ToString))
+                            .EditedOn = SafeField(mDataReader(CompanyTax.DbFields.Ct_EditedOn.ToString))
+                            .ObjectState = EnumObjectState.Unchanged
+                        End With
+                        objcol.Add(obj)
+                    End While
+                End Using
+                SetDataEntityList(objcol)
+            Catch ex As Exception
+                DataEntity.ErrorMsg = ex.Message
+                Throw New Exception(ex.Message)
+            End Try
+            Return Me
+        End Function
+        Public Overrides Async Function FetchAsync(ByVal DataBusinessParams As MgrArgs) As Task(Of IDataEntityMgr(Of CompanyTax))
+            Dim objcol As New List(Of CompanyTax)
+            Dim obj As CompanyTax
+            Try
+                With DataBaseBuilder
+                    .CreateCommandParameters(CompanyTax.Properties.CoID.ToString, DataEntity.CoID)
+                    .CreateCommandParameters(CompanyTax.Properties.GSTNo.ToString, DataEntity.GSTNo)
+                    .CreateCommandParameters(CompanyTax.Properties.SalesTaxNo.ToString, DataEntity.SalesTaxNo)
+                    .CreateCommandParameters(CompanyTax.Properties.ServiceTaxNo.ToString, DataEntity.ServiceTaxNo)
+                    .CreateCommandParameters("SortField", DataBusinessParams.GetOrderBy)
+                    .CreateCommandParameters("IsLike", DataBusinessParams.OptionList.IsLike)
+                End With
+
+                Using mDataReader As IDataReader = Await DataBaseBuilder.GetdataReaderAsync(CompanyTax.StoreProcedures.spCompanyTax_Get.ToString)
                     If DataBaseBuilder.ErrorMsg IsNot Nothing Then
                         Throw New Exception(DataBaseBuilder.ErrorMsg)
                     End If
@@ -205,6 +308,23 @@ Namespace DataEntityMgr
                     Delete()
             End Select
             MyBase.Save()
+            Return Me
+        End Function
+        Public Overrides Async Function SaveAsync() As Task(Of IDataEntityMgr(Of CompanyTax))
+            Select Case DataEntity.ObjectState
+                Case EnumObjectState.Added, EnumObjectState.Modified
+                    DataEntity.CheckAllRules()
+                    If DataEntity.IsValid = False Then DataEntity.ErrorMsg = DataEntity.BrokenRulesCollection.ToString
+            End Select
+            Select Case DataEntity.ObjectState
+                Case EnumObjectState.Added
+                    Await AddAsync()
+                Case EnumObjectState.Modified
+                    Await UpdateAsync()
+                Case EnumObjectState.Deleted
+                    Await DeleteAsync()
+            End Select
+            Await MyBase.SaveAsync()
             Return Me
         End Function
 #End Region

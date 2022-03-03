@@ -47,7 +47,6 @@ Namespace DataEntityMgr
         Public Overrides Sub AddBusinessRules(Optional ByVal args As Dictionary(Of String, RuleArgs) = Nothing)
             DataEntity.AddBusinessRules(CompanySystem.Properties.CoID.ToString, AddressOf Validation.CommonRules.StringRequired)
             DataEntity.AddBusinessRules(CompanySystem.Properties.SysID.ToString, AddressOf Validation.CommonRules.StringRequired)
-            'DataEntity.AddBusinessRules(CompanySystem.Properties.CoID.ToString, AddressOf IsExist)
             DataEntity.AddBusinessRules(CompanySystem.Properties.CoID.ToString, AddressOf IsCoExist)
             DataEntity.AddBusinessRules(CompanySystem.Properties.SysID.ToString, AddressOf IsSysExist)
             DataEntity.AddBusinessRules(CompanySystem.Properties.SysID.ToString, AddressOf IsExist)
@@ -141,6 +140,36 @@ Namespace DataEntityMgr
                 DataEntity.ErrorMsg = e.Message
             End Try
         End Sub
+        Public Overrides Async Function AddAsync() As Task
+            With DataBaseBuilder
+                .CreateCommandParameters(CompanySystem.Properties.CoID.ToString, DataEntity.CoID)
+                .CreateCommandParameters(CompanySystem.Properties.SysID.ToString, DataEntity.SysID)
+                .CreateCommandParameters(CompanySystem.Properties.DbName.ToString, DataEntity.DbName)
+                .CreateCommandParameters(CompanySystem.Properties.ServerName.ToString, DataEntity.ServerName)
+                .CreateCommandParameters(CompanySystem.Properties.ConnectionString.ToString, DataEntity.ConnectionString)
+                .CreateCommandParameters(CompanySystem.Properties.ServerPath.ToString, DataEntity.ServerPath)
+                .CreateCommandParameters(CompanySystem.Properties.BackupPath1.ToString, DataEntity.BackupPath1)
+                .CreateCommandParameters(CompanySystem.Properties.BackupPath2.ToString, DataEntity.BackupPath2)
+                .CreateCommandParameters(CompanySystem.Properties.ExportPath1.ToString, DataEntity.ExportPath1)
+                .CreateCommandParameters(CompanySystem.Properties.ExportPath2.ToString, DataEntity.ExportPath2)
+                .CreateCommandParameters(CompanySystem.Properties.ExportPath3.ToString, DataEntity.ExportPath3)
+                .CreateCommandParameters(CompanySystem.Properties.Active.ToString, DataEntity.Active)
+                .CreateCommandParameters(CompanySystem.Properties.CreatedBy.ToString, DataEntity.CreatedBy)
+                .CreateCommandParameters(CompanySystem.Properties.CreatedOn.ToString, DataEntity.CreatedOn)
+                .CreateCommandParameters(CompanySystem.Properties.EditedBy.ToString, DataEntity.EditedBy)
+                .CreateCommandParameters(CompanySystem.Properties.EditedOn.ToString, DataEntity.EditedOn)
+            End With
+            Try
+                Await DataBaseBuilder.SaveChangesAsync(CompanySystem.StoreProcedures.spCompanySystem_Insert.ToString, CommandType.StoredProcedure)
+                If DataBaseBuilder.ErrorMsg IsNot Nothing Then
+                    Throw New Exception(DataBaseBuilder.ErrorMsg)
+                Else
+                    DataEntity.ObjectState = EnumObjectState.Unchanged
+                End If
+            Catch e As System.Exception
+                DataEntity.ErrorMsg = e.Message
+            End Try
+        End Function
         Public Overrides Sub Update()
             With DataBaseBuilder
                 .CreateCommandParameters(CompanySystem.Properties.AutoID.ToString, DataEntity.AutoID)
@@ -172,6 +201,37 @@ Namespace DataEntityMgr
                 DataEntity.ErrorMsg = e.Message
             End Try
         End Sub
+        Public Overrides Async Function UpdateAsync() As Task
+            With DataBaseBuilder
+                .CreateCommandParameters(CompanySystem.Properties.AutoID.ToString, DataEntity.AutoID)
+                .CreateCommandParameters(CompanySystem.Properties.CoID.ToString, DataEntity.CoID)
+                .CreateCommandParameters(CompanySystem.Properties.SysID.ToString, DataEntity.SysID)
+                .CreateCommandParameters(CompanySystem.Properties.DbName.ToString, DataEntity.DbName)
+                .CreateCommandParameters(CompanySystem.Properties.ServerName.ToString, DataEntity.ServerName)
+                .CreateCommandParameters(CompanySystem.Properties.ConnectionString.ToString, DataEntity.ConnectionString)
+                .CreateCommandParameters(CompanySystem.Properties.ServerPath.ToString, DataEntity.ServerPath)
+                .CreateCommandParameters(CompanySystem.Properties.BackupPath1.ToString, DataEntity.BackupPath1)
+                .CreateCommandParameters(CompanySystem.Properties.BackupPath2.ToString, DataEntity.BackupPath2)
+                .CreateCommandParameters(CompanySystem.Properties.ExportPath1.ToString, DataEntity.ExportPath1)
+                .CreateCommandParameters(CompanySystem.Properties.ExportPath2.ToString, DataEntity.ExportPath2)
+                .CreateCommandParameters(CompanySystem.Properties.ExportPath3.ToString, DataEntity.ExportPath3)
+                .CreateCommandParameters(CompanySystem.Properties.Active.ToString, DataEntity.Active)
+                .CreateCommandParameters(CompanySystem.Properties.CreatedBy.ToString, DataEntity.CreatedBy)
+                .CreateCommandParameters(CompanySystem.Properties.CreatedOn.ToString, DataEntity.CreatedOn)
+                .CreateCommandParameters(CompanySystem.Properties.EditedBy.ToString, DataEntity.EditedBy)
+                .CreateCommandParameters(CompanySystem.Properties.EditedOn.ToString, DataEntity.EditedOn)
+            End With
+            Try
+                Await DataBaseBuilder.SaveChangesAsync(CompanySystem.StoreProcedures.spCompanySystem_Update.ToString, CommandType.StoredProcedure)
+                If DataBaseBuilder.ErrorMsg IsNot Nothing Then
+                    Throw New Exception(DataBaseBuilder.ErrorMsg)
+                Else
+                    DataEntity.ObjectState = EnumObjectState.Unchanged
+                End If
+            Catch e As System.Exception
+                DataEntity.ErrorMsg = e.Message
+            End Try
+        End Function
         Public Overrides Sub Delete()
             Dim mProcRetValue As IDataParameter
             With DataBaseBuilder
@@ -190,6 +250,24 @@ Namespace DataEntityMgr
                 DataEntity.ErrorMsg = e.Message
             End Try
         End Sub
+        Public Overrides Async Function DeleteAsync() As Task
+            Dim mProcRetValue As IDataParameter
+            With DataBaseBuilder
+                .CreateCommandParameters(CompanySystem.Properties.AutoID.ToString, DataEntity.AutoID)
+                mProcRetValue = .CreateCommandParametersExplicit("ErrMsg", DbType.String, ParameterDirection.Output)
+            End With
+            Try
+                Dim i As Integer = Await DataBaseBuilder.SaveChangesAsync(CompanySystem.StoreProcedures.spCompanySystem_Delete.ToString, CommandType.StoredProcedure)
+                If DataBaseBuilder.ErrorMsg IsNot Nothing Then
+                    Throw New Exception(DataBaseBuilder.ErrorMsg)
+                End If
+                If i < 0 Then
+                    DataEntity.ErrorMsg = mProcRetValue.Value    'return error
+                End If
+            Catch e As System.Exception
+                DataEntity.ErrorMsg = e.Message
+            End Try
+        End Function
         Public Overrides Function Fetch(ByVal DataBusinessParams As MgrArgs) As IDataEntityMgr(Of CompanySystem)
             Dim objcol As New List(Of CompanySystem)
             Dim obj As CompanySystem
@@ -249,6 +327,65 @@ Namespace DataEntityMgr
             End Try
             Return Me
         End Function
+        Public Overrides Async Function FetchAsync(ByVal DataBusinessParams As MgrArgs) As Task(Of IDataEntityMgr(Of CompanySystem))
+            Dim objcol As New List(Of CompanySystem)
+            Dim obj As CompanySystem
+            Try
+                With DataBaseBuilder
+                    .CreateCommandParameters(CompanySystem.Properties.AutoID.ToString, DataEntity.AutoID)
+                    .CreateCommandParameters(CompanySystem.Properties.CoID.ToString, DataEntity.CoID)
+                    .CreateCommandParameters(CompanySystem.Properties.SysID.ToString, DataEntity.SysID)
+                    .CreateCommandParameters(CompanySystem.Properties.DbName.ToString, DataEntity.DbName)
+                    .CreateCommandParameters(CompanySystem.Properties.ServerName.ToString, DataEntity.ServerName)
+                    .CreateCommandParameters(CompanySystem.Properties.ConnectionString.ToString, DataEntity.ConnectionString)
+                    .CreateCommandParameters(CompanySystem.Properties.ServerPath.ToString, DataEntity.ServerPath)
+                    .CreateCommandParameters(CompanySystem.Properties.BackupPath1.ToString, DataEntity.BackupPath1)
+                    .CreateCommandParameters(CompanySystem.Properties.BackupPath2.ToString, DataEntity.BackupPath2)
+                    .CreateCommandParameters(CompanySystem.Properties.ExportPath1.ToString, DataEntity.ExportPath1)
+                    .CreateCommandParameters(CompanySystem.Properties.ExportPath2.ToString, DataEntity.ExportPath2)
+                    .CreateCommandParameters(CompanySystem.Properties.ExportPath3.ToString, DataEntity.ExportPath3)
+                    .CreateCommandParameters(CompanySystem.Properties.Active.ToString, DataEntity.Active)
+                    .CreateCommandParameters("SortField", DataBusinessParams.GetOrderBy)
+                    .CreateCommandParameters("IsLike", DataBusinessParams.OptionList.IsLike)
+                End With
+
+                Using mDataReader As IDataReader = Await DataBaseBuilder.GetdataReaderAsync(CompanySystem.StoreProcedures.spCompanySystem_Get.ToString)
+                    If DataBaseBuilder.ErrorMsg IsNot Nothing Then
+                        Throw New Exception(DataBaseBuilder.ErrorMsg)
+                    End If
+
+                    While mDataReader.Read
+                        obj = New CompanySystem
+                        With obj
+                            .AutoID = SafeField(mDataReader(CompanySystem.DbFields.Cs_AutoID.ToString))
+                            .CoID = SafeField(mDataReader(CompanySystem.DbFields.Cs_CoID.ToString))
+                            .SysID = SafeField(mDataReader(CompanySystem.DbFields.Cs_SysID.ToString))
+                            .DbName = SafeField(mDataReader(CompanySystem.DbFields.Cs_DbName.ToString))
+                            .ServerName = SafeField(mDataReader(CompanySystem.DbFields.Cs_ServerName.ToString))
+                            .ConnectionString = SafeField(mDataReader(CompanySystem.DbFields.Cs_ConnectionString.ToString))
+                            .ServerPath = SafeField(mDataReader(CompanySystem.DbFields.Cs_ServerPath.ToString))
+                            .BackupPath1 = SafeField(mDataReader(CompanySystem.DbFields.Cs_BackupPath1.ToString))
+                            .BackupPath2 = SafeField(mDataReader(CompanySystem.DbFields.Cs_BackupPath2.ToString))
+                            .ExportPath1 = SafeField(mDataReader(CompanySystem.DbFields.Cs_ExportPath1.ToString))
+                            .ExportPath2 = SafeField(mDataReader(CompanySystem.DbFields.Cs_ExportPath2.ToString))
+                            .ExportPath3 = SafeField(mDataReader(CompanySystem.DbFields.Cs_ExportPath3.ToString))
+                            .Active = SafeField(mDataReader(CompanySystem.DbFields.Cs_Active.ToString))
+                            .CreatedBy = SafeField(mDataReader(CompanySystem.DbFields.Cs_CreatedBy.ToString))
+                            .CreatedOn = SafeField(mDataReader(CompanySystem.DbFields.Cs_CreatedOn.ToString))
+                            .EditedBy = SafeField(mDataReader(CompanySystem.DbFields.Cs_EditedBy.ToString))
+                            .EditedOn = SafeField(mDataReader(CompanySystem.DbFields.Cs_EditedOn.ToString))
+                            .ObjectState = EnumObjectState.Unchanged
+                        End With
+                        objcol.Add(obj)
+                    End While
+                End Using
+                SetDataEntityList(objcol)
+            Catch ex As Exception
+                DataEntity.ErrorMsg = ex.Message
+                Throw New Exception(ex.Message)
+            End Try
+            Return Me
+        End Function
         Public Overrides Function Save() As IDataEntityMgr(Of CompanySystem)
             Select Case DataEntity.ObjectState
                 Case EnumObjectState.Added, EnumObjectState.Modified
@@ -264,6 +401,23 @@ Namespace DataEntityMgr
                     Delete()
             End Select
             MyBase.Save()
+            Return Me
+        End Function
+        Public Overrides Async Function SaveAsync() As Task(Of IDataEntityMgr(Of CompanySystem))
+            Select Case DataEntity.ObjectState
+                Case EnumObjectState.Added, EnumObjectState.Modified
+                    DataEntity.CheckAllRules()
+                    If DataEntity.IsValid = False Then DataEntity.ErrorMsg = DataEntity.BrokenRulesCollection.ToString
+            End Select
+            Select Case DataEntity.ObjectState
+                Case EnumObjectState.Added
+                    Await AddAsync()
+                Case EnumObjectState.Modified
+                    Await UpdateAsync()
+                Case EnumObjectState.Deleted
+                    Await DeleteAsync()
+            End Select
+            Await MyBase.SaveAsync()
             Return Me
         End Function
 #End Region

@@ -2,6 +2,7 @@ Imports System.ComponentModel
 Imports System.Reflection
 Imports DataAccess
 Imports DataAccess.DatabaseBuilder
+Imports Helper
 Imports Validation
 
 Public MustInherit Class DataEntityMgrBase(Of T)
@@ -112,17 +113,24 @@ Public MustInherit Class DataEntityMgrBase(Of T)
         Return Nothing
     End Function
     Public Overridable Function FetchAsync(dataBausinessParams As MgrArgs) As Task(Of IDataEntityMgr(Of T)) Implements IDataEntityMgr(Of T).FetchAsync
-        Return Nothing
+        Return New Task(Nothing)
     End Function
     Public Overridable Function AddAsync() As Task
-        Return New Task(Function() Nothing)
+        Return New Task(Nothing)
     End Function
     Public Overridable Function UpdateAsync() As Task
-        Return New Task(Function() Nothing)
+        Return New Task(Nothing)
     End Function
     Public Overridable Function DeleteAsync() As Task
-        Return New Task(Function() Nothing)
+        Return New Task(Nothing)
     End Function
+    Public Overridable Function SaveAsync() As Task(Of IDataEntityMgr(Of T))
+        RaiseEvent DataEntitySaved(DataEntity)
+        Dim mTaskCompletionSource As New TaskCompletionSource(Of IDataEntityMgr(Of T))
+        mTaskCompletionSource.SetResult(Nothing)
+        Return mTaskCompletionSource.Task
+    End Function
+
     'Public Overridable Function FetchMaster(dataBusinessParams As MgrArgs) As IDataEntityMgr(Of T) Implements IDataEntityMgr(Of T).FetchMaster
     '    Return Nothing
     'End Function

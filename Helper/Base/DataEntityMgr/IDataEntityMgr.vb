@@ -19,10 +19,18 @@ Public Interface IDataEntityMgr(Of T)
 
 #Region "Method"
     Function Fetch(ByVal dataBausinessParams As MgrArgs) As IDataEntityMgr(Of T)
-    'Function FetchMaster(ByVal dataBausinessParams As MgrArgs) As IDataEntityMgr(Of T)
     Function FetchAsync(ByVal dataBausinessParams As MgrArgs) As Task(Of IDataEntityMgr(Of T))
     Function Save() As IDataEntityMgr(Of T)
+    'Function FetchMaster(ByVal dataBausinessParams As MgrArgs) As IDataEntityMgr(Of T)
 
+    'No enforcement of implement ...
+    'Add
+    'AddAsync
+    'Update
+    'UpdateAsync
+    'Delete
+    'DeleteAsync
+    'SaveAsync
 #End Region
 
 End Interface

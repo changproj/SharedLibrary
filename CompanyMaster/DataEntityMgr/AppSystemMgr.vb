@@ -94,6 +94,26 @@ Namespace DataEntityMgr
                 DataEntity.ErrorMsg = e.Message
             End Try
         End Sub
+        Public Overrides Async Function AddAsync() As Task
+            With DataBaseBuilder
+                .CreateCommandParameters(AppSystem.Properties.ID.ToString, DataEntity.ID)
+                .CreateCommandParameters(AppSystem.Properties.Name.ToString, DataEntity.Name)
+                .CreateCommandParameters(AppSystem.Properties.CreatedBy.ToString, DataEntity.CreatedBy)
+                .CreateCommandParameters(AppSystem.Properties.CreatedOn.ToString, DataEntity.CreatedOn)
+                .CreateCommandParameters(AppSystem.Properties.EditedBy.ToString, DataEntity.EditedBy)
+                .CreateCommandParameters(AppSystem.Properties.EditedOn.ToString, DataEntity.EditedOn)
+            End With
+            Try
+                Await DataBaseBuilder.SaveChangesAsync(AppSystem.StoreProcedures.spAppSystem_Insert.ToString, CommandType.StoredProcedure)
+                If DataBaseBuilder.ErrorMsg IsNot Nothing Then
+                    Throw New Exception(DataBaseBuilder.ErrorMsg)
+                Else
+                    DataEntity.ObjectState = EnumObjectState.Unchanged
+                End If
+            Catch e As System.Exception
+                DataEntity.ErrorMsg = e.Message
+            End Try
+        End Function
         Public Overrides Sub Update()
             With DataBaseBuilder
                 .CreateCommandParameters(AppSystem.Properties.ID.ToString, DataEntity.ID)
@@ -114,6 +134,26 @@ Namespace DataEntityMgr
                 DataEntity.ErrorMsg = e.Message
             End Try
         End Sub
+        Public Overrides Async Function UpdateAsync() As Task
+            With DataBaseBuilder
+                .CreateCommandParameters(AppSystem.Properties.ID.ToString, DataEntity.ID)
+                .CreateCommandParameters(AppSystem.Properties.Name.ToString, DataEntity.Name)
+                .CreateCommandParameters(AppSystem.Properties.CreatedBy.ToString, DataEntity.CreatedBy)
+                .CreateCommandParameters(AppSystem.Properties.CreatedOn.ToString, DataEntity.CreatedOn)
+                .CreateCommandParameters(AppSystem.Properties.EditedBy.ToString, DataEntity.EditedBy)
+                .CreateCommandParameters(AppSystem.Properties.EditedOn.ToString, DataEntity.EditedOn)
+            End With
+            Try
+                Await DataBaseBuilder.SaveChangesAsync(AppSystem.StoreProcedures.spAppSystem_Update.ToString, CommandType.StoredProcedure)
+                If DataBaseBuilder.ErrorMsg IsNot Nothing Then
+                    Throw New Exception(DataBaseBuilder.ErrorMsg)
+                Else
+                    DataEntity.ObjectState = EnumObjectState.Unchanged
+                End If
+            Catch e As System.Exception
+                DataEntity.ErrorMsg = e.Message
+            End Try
+        End Function
         Public Overrides Sub Delete()
             Dim mProcRetValue As IDataParameter
             With DataBaseBuilder
@@ -132,6 +172,24 @@ Namespace DataEntityMgr
                 DataEntity.ErrorMsg = e.Message
             End Try
         End Sub
+        Public Overrides Async Function DeleteAsync() As Task
+            Dim mProcRetValue As IDataParameter
+            With DataBaseBuilder
+                .CreateCommandParameters(AppSystem.Properties.ID.ToString, DataEntity.ID)
+                mProcRetValue = .CreateCommandParametersExplicit("ErrMsg", DbType.String, ParameterDirection.Output)
+            End With
+            Try
+                Dim i As Integer = Await DataBaseBuilder.SaveChangesAsync(AppSystem.StoreProcedures.spAppSystem_Delete.ToString, CommandType.StoredProcedure)
+                If DataBaseBuilder.ErrorMsg IsNot Nothing Then
+                    Throw New Exception(DataBaseBuilder.ErrorMsg)
+                End If
+                If i < 0 Then
+                    DataEntity.ErrorMsg = mProcRetValue.Value    'return error
+                End If
+            Catch e As System.Exception
+                DataEntity.ErrorMsg = e.Message
+            End Try
+        End Function
         Public Overrides Function Fetch(ByVal DataBusinessParams As MgrArgs) As IDataEntityMgr(Of AppSystem)
             Dim objcol As New List(Of AppSystem)
             Dim obj As AppSystem
@@ -144,6 +202,43 @@ Namespace DataEntityMgr
                 End With
 
                 Using mDataReader As IDataReader = DataBaseBuilder.GetdataReader(AppSystem.StoreProcedures.spAppSystem_Get.ToString)
+                    If DataBaseBuilder.ErrorMsg IsNot Nothing Then
+                        Throw New Exception(DataBaseBuilder.ErrorMsg)
+                    End If
+
+                    While mDataReader.Read
+                        obj = New AppSystem
+                        With obj
+                            .ID = SafeField(mDataReader(AppSystem.DbFields.Sy_ID.ToString))
+                            .Name = SafeField(mDataReader(AppSystem.DbFields.Sy_Name.ToString))
+                            .CreatedBy = SafeField(mDataReader(AppSystem.DbFields.Sy_CreatedBy.ToString))
+                            .CreatedOn = SafeField(mDataReader(AppSystem.DbFields.Sy_CreatedOn.ToString))
+                            .EditedBy = SafeField(mDataReader(AppSystem.DbFields.Sy_EditedBy.ToString))
+                            .EditedOn = SafeField(mDataReader(AppSystem.DbFields.Sy_EditedOn.ToString))
+                            .ObjectState = EnumObjectState.Unchanged
+                        End With
+                        objcol.Add(obj)
+                    End While
+                End Using
+                SetDataEntityList(objcol)
+            Catch ex As Exception
+                DataEntity.ErrorMsg = ex.Message
+                Throw New Exception(ex.Message)
+            End Try
+            Return Me
+        End Function
+        Public Overrides Async Function FetchAsync(ByVal DataBusinessParams As MgrArgs) As Task(Of IDataEntityMgr(Of AppSystem))
+            Dim objcol As New List(Of AppSystem)
+            Dim obj As AppSystem
+            Try
+                With DataBaseBuilder
+                    .CreateCommandParameters(AppSystem.Properties.ID.ToString, DataEntity.ID)
+                    .CreateCommandParameters(AppSystem.Properties.Name.ToString, DataEntity.Name)
+                    .CreateCommandParameters("SortField", DataBusinessParams.GetOrderBy)
+                    .CreateCommandParameters("IsLike", DataBusinessParams.OptionList.IsLike)
+                End With
+
+                Using mDataReader As IDataReader = Await DataBaseBuilder.GetdataReaderAsync(AppSystem.StoreProcedures.spAppSystem_Get.ToString)
                     If DataBaseBuilder.ErrorMsg IsNot Nothing Then
                         Throw New Exception(DataBaseBuilder.ErrorMsg)
                     End If
@@ -184,6 +279,23 @@ Namespace DataEntityMgr
                     Delete()
             End Select
             MyBase.Save()
+            Return Me
+        End Function
+        Public Overrides Async Function SaveAsync() As Task(Of IDataEntityMgr(Of AppSystem))
+            Select Case DataEntity.ObjectState
+                Case EnumObjectState.Added, EnumObjectState.Modified
+                    DataEntity.CheckAllRules()
+                    If DataEntity.IsValid = False Then DataEntity.ErrorMsg = DataEntity.BrokenRulesCollection.ToString
+            End Select
+            Select Case DataEntity.ObjectState
+                Case EnumObjectState.Added
+                    Await AddAsync()
+                Case EnumObjectState.Modified
+                    Await UpdateAsync()
+                Case EnumObjectState.Deleted
+                    Await DeleteAsync()
+            End Select
+            Await MyBase.SaveAsync()
             Return Me
         End Function
 #End Region

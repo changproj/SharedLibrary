@@ -486,6 +486,23 @@ Namespace DataEntityMgr
             MyBase.Save()
             Return Me
         End Function
+        Public Overrides Async Function SaveAsync() As Task(Of IDataEntityMgr(Of CompanyMaster))
+            Select Case DataEntity.ObjectState
+                Case EnumObjectState.Added, EnumObjectState.Modified
+                    DataEntity.CheckAllRules()
+                    If DataEntity.IsValid = False Then DataEntity.ErrorMsg = DataEntity.BrokenRulesCollection.ToString
+            End Select
+            Select Case DataEntity.ObjectState
+                Case EnumObjectState.Added
+                    Await AddAsync()
+                Case EnumObjectState.Modified
+                    Await UpdateAsync()
+                Case EnumObjectState.Deleted
+                    Await DeleteAsync()
+            End Select
+            Await MyBase.SaveAsync()
+            Return Me
+        End Function
 #End Region
 
 
