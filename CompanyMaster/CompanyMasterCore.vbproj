@@ -44,6 +44,10 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Helper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Helper\bin\Debug\Helper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
       <Private>True</Private>
@@ -141,10 +145,6 @@
     <ProjectReference Include="..\DataAccess\DataAccess.vbproj">
       <Project>{6d4fc5dd-e0c3-4f41-914c-9a460bcca5d4}</Project>
       <Name>DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Helper\Helper.vbproj">
-      <Project>{e4e5de65-b390-4dd9-b1a5-301fa2c89616}</Project>
-      <Name>Helper</Name>
     </ProjectReference>
     <ProjectReference Include="..\Validation\Validation.vbproj">
       <Project>{fe3307b9-1435-441e-85b4-0ccc87b95c2f}</Project>

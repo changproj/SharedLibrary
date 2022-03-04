@@ -35,7 +35,7 @@ Public Class MgrArgs
             If result IsNot Nothing Then result += ","
             result += String.Format("{0} {1}", item.Key, item.Value)
         Next
-        Return result
+        Return $"Order By {result}"
     End Function
 End Class
 
@@ -63,10 +63,12 @@ End Class
 Public Class OptionList
     Private _isLike As enumIsLike
     Private _isDistinct As Boolean = False
+    Private _SelBuilder As SelectionBuilder
 
 
     Public Sub New(Optional isLike As enumIsLike = enumIsLike.like)
         _isLike = isLike
+        _SelBuilder = New SelectionBuilder
     End Sub
     Public Property IsLike() As enumIsLike
         Get
@@ -84,4 +86,23 @@ Public Class OptionList
             Me._isDistinct = value
         End Set
     End Property
+    Public ReadOnly Property SelectionText(ByVal Optional selectionType As SelectionType = SelectionType.And) As String
+        Get
+            Dim mSelection As String = String.Empty
+            Select Case selectionType
+                Case SelectionType.And
+                    mSelection = " And"
+                Case SelectionType.Or
+                    mSelection = " Or"
+                Case SelectionType.Nil
+            End Select
+            Return $"{mSelection}{If(selectionType <> SelectionType.Nil, Space(1), String.Empty)}{_SelBuilder.ToText}"
+        End Get
+    End Property
+    Public Sub AddSelection(ByVal ParamArray vkp() As SelectionHelper)
+        _SelBuilder.Append(vkp)
+    End Sub
+    Public Sub AddSelection(ByVal vkpList As List(Of SelectionHelper))
+        _SelBuilder.Append(vkpList.ToArray)
+    End Sub
 End Class

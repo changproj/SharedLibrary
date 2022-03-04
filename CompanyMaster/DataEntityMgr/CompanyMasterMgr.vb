@@ -409,6 +409,7 @@ Namespace DataEntityMgr
                     .CreateCommandParameters(CompanyMaster.Properties.SysID.ToString, DataEntity.SysID)         'Fixed value to be passed from FrmLogin
                     .CreateCommandParameters("SortField", DataBusinessParams.GetOrderBy)
                     .CreateCommandParameters("IsLike", DataBusinessParams.OptionList.IsLike)
+                    .CreateCommandParameters("SelectionText", DataBusinessParams.OptionList.SelectionText(SelectionType.And))
                 End With
 
                 Using mDataReader As IDataReader = Await DataBaseBuilder.GetdataReaderAsync(CompanyMaster.StoreProcedures.spCompanyMaster_Get.ToString)
