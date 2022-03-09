@@ -1,10 +1,6 @@
-﻿Imports DataEntity
-Imports DataBusiness
-Imports GeneralAcc.Module
-Imports Helper
+﻿Imports System.Drawing
+Imports System.Windows.Forms
 Imports Helper.ApplicationTools
-Imports System.ComponentModel
-Imports System.Linq
 
 Public Class EnquiryBase
 
@@ -89,10 +85,10 @@ Public Class EnquiryBase
     End Property
     Public Property DisableControlSetProperty() As Boolean
         Get
-            Return _DisableControlSetProperty
+            Return _disableControlSetProperty
         End Get
         Set(ByVal value As Boolean)
-            _DisableControlSetProperty = value
+            _disableControlSetProperty = value
         End Set
     End Property
     Public ReadOnly Property IncludeFieldList As List(Of String)

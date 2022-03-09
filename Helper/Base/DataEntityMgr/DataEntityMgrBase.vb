@@ -2,7 +2,6 @@ Imports System.ComponentModel
 Imports System.Reflection
 Imports DataAccess
 Imports DataAccess.DatabaseBuilder
-Imports Helper
 Imports Validation
 
 Public MustInherit Class DataEntityMgrBase(Of T)
@@ -99,21 +98,37 @@ Public MustInherit Class DataEntityMgrBase(Of T)
 #End Region
 
 #Region "MustOverride"
-    Public MustOverride Sub Add()
-    Public MustOverride Sub Update()
-    Public MustOverride Sub Delete()
+    'Public MustOverride Sub Add()
+    'Public MustOverride Sub Update()
+    'Public MustOverride Sub Delete()
     Public MustOverride Function Fetch(dataBusinessParams As MgrArgs) As IDataEntityMgr(Of T) Implements IDataEntityMgr(Of T).Fetch
     Public MustOverride Sub AddBusinessRules(Optional ByVal args As Dictionary(Of String, RuleArgs) = Nothing)
     Public MustOverride Sub EngageRules(Optional ByVal args As Dictionary(Of String, RuleArgs) = Nothing)
 #End Region
 
 #Region "Overridable"
-    Public Overridable Function Save() As IDataEntityMgr(Of T) Implements IDataEntityMgr(Of T).Save
+    'Public Overridable Function Save() As IDataEntityMgr(Of T) Implements IDataEntityMgr(Of T).Save
+    '    RaiseEvent DataEntitySaved(DataEntity)
+    '    Return Nothing
+    'End Function
+    'Public Overridable Function FetchAsync(dataBausinessParams As MgrArgs) As Task(Of IDataEntityMgr(Of T)) Implements IDataEntityMgr(Of T).FetchAsync
+    '    Return New Task(Nothing)
+    'End Function
+    Public Overridable Function Save() As IDataEntityMgr(Of T)
         RaiseEvent DataEntitySaved(DataEntity)
         Return Nothing
     End Function
-    Public Overridable Function FetchAsync(dataBausinessParams As MgrArgs) As Task(Of IDataEntityMgr(Of T)) Implements IDataEntityMgr(Of T).FetchAsync
+    Public Overridable Function FetchAsync(dataBausinessParams As MgrArgs) As Task(Of IDataEntityMgr(Of T))
         Return New Task(Nothing)
+    End Function
+    Public Overridable Function Add() As Object
+        Return Nothing
+    End Function
+    Public Overridable Function Update() As Object
+        Return Nothing
+    End Function
+    Public Overridable Function Delete() As Object
+        Return Nothing
     End Function
     Public Overridable Function AddAsync() As Task
         Return New Task(Nothing)

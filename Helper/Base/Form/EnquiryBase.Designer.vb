@@ -1,6 +1,8 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿Imports System.Windows.Forms
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class EnquiryBase
-    Inherits GeneralAcc.WinFormBase
+    Inherits Helper.WinFormBase
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -94,7 +96,7 @@ Partial Class EnquiryBase
         '
         'btnLoading
         '
-        Me.btnLoading.Image = Global.GeneralAcc.My.Resources.Resources.LoadingProgress
+        Me.btnLoading.Image = Global.Helper.My.Resources.Resources.LoadingProgress
         Me.btnLoading.Location = New System.Drawing.Point(505, 97)
         Me.btnLoading.Name = "btnLoading"
         Me.btnLoading.Size = New System.Drawing.Size(136, 123)

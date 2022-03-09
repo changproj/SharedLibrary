@@ -1,7 +1,7 @@
 Imports DataAccess
 
 Public Interface IDataEntityMgr(Of T)
-    Inherits IDatabaseBuilder
+    'Inherits IDatabaseBuilder
 
 #Region "Delegate"
     Delegate Sub DataEntitySavedEventHandler(target As T)
@@ -19,8 +19,8 @@ Public Interface IDataEntityMgr(Of T)
 
 #Region "Method"
     Function Fetch(ByVal dataBausinessParams As MgrArgs) As IDataEntityMgr(Of T)
-    Function FetchAsync(ByVal dataBausinessParams As MgrArgs) As Task(Of IDataEntityMgr(Of T))
-    Function Save() As IDataEntityMgr(Of T)
+    'Function FetchAsync(ByVal dataBausinessParams As MgrArgs) As Task(Of IDataEntityMgr(Of T))
+    'Function Save() As IDataEntityMgr(Of T)
     'Function FetchMaster(ByVal dataBausinessParams As MgrArgs) As IDataEntityMgr(Of T)
 
     'No enforcement of implement ...
@@ -31,6 +31,8 @@ Public Interface IDataEntityMgr(Of T)
     'Delete
     'DeleteAsync
     'SaveAsync
+    'FetchAsync
+    'Save
 #End Region
 
 End Interface

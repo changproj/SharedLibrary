@@ -110,7 +110,7 @@ Namespace DataEntityMgr
 #End Region
 
 #Region "Overrides"
-        Public Overrides Sub Add()
+        Public Overrides Function Add() As Object
             With DataBaseBuilder
                 .CreateCommandParameters(CompanySystem.Properties.CoID.ToString, DataEntity.CoID)
                 .CreateCommandParameters(CompanySystem.Properties.SysID.ToString, DataEntity.SysID)
@@ -129,8 +129,9 @@ Namespace DataEntityMgr
                 .CreateCommandParameters(CompanySystem.Properties.EditedBy.ToString, DataEntity.EditedBy)
                 .CreateCommandParameters(CompanySystem.Properties.EditedOn.ToString, DataEntity.EditedOn)
             End With
+            Dim mCount As Integer = 0
             Try
-                DataBaseBuilder.SaveChanges(CompanySystem.StoreProcedures.spCompanySystem_Insert.ToString, CommandType.StoredProcedure)
+                mCount = DataBaseBuilder.SaveChanges(CompanySystem.StoreProcedures.spCompanySystem_Insert.ToString, CommandType.StoredProcedure)
                 If DataBaseBuilder.ErrorMsg IsNot Nothing Then
                     Throw New Exception(DataBaseBuilder.ErrorMsg)
                 Else
@@ -139,7 +140,8 @@ Namespace DataEntityMgr
             Catch e As System.Exception
                 DataEntity.ErrorMsg = e.Message
             End Try
-        End Sub
+            Return mCount
+        End Function
         Public Overrides Async Function AddAsync() As Task
             With DataBaseBuilder
                 .CreateCommandParameters(CompanySystem.Properties.CoID.ToString, DataEntity.CoID)
@@ -170,7 +172,7 @@ Namespace DataEntityMgr
                 DataEntity.ErrorMsg = e.Message
             End Try
         End Function
-        Public Overrides Sub Update()
+        Public Overrides Function Update() As Object
             With DataBaseBuilder
                 .CreateCommandParameters(CompanySystem.Properties.AutoID.ToString, DataEntity.AutoID)
                 .CreateCommandParameters(CompanySystem.Properties.CoID.ToString, DataEntity.CoID)
@@ -190,8 +192,9 @@ Namespace DataEntityMgr
                 .CreateCommandParameters(CompanySystem.Properties.EditedBy.ToString, DataEntity.EditedBy)
                 .CreateCommandParameters(CompanySystem.Properties.EditedOn.ToString, DataEntity.EditedOn)
             End With
+            Dim mCount As Integer = 0
             Try
-                DataBaseBuilder.SaveChanges(CompanySystem.StoreProcedures.spCompanySystem_Update.ToString, CommandType.StoredProcedure)
+                mCount = DataBaseBuilder.SaveChanges(CompanySystem.StoreProcedures.spCompanySystem_Update.ToString, CommandType.StoredProcedure)
                 If DataBaseBuilder.ErrorMsg IsNot Nothing Then
                     Throw New Exception(DataBaseBuilder.ErrorMsg)
                 Else
@@ -200,7 +203,8 @@ Namespace DataEntityMgr
             Catch e As System.Exception
                 DataEntity.ErrorMsg = e.Message
             End Try
-        End Sub
+            Return mCount
+        End Function
         Public Overrides Async Function UpdateAsync() As Task
             With DataBaseBuilder
                 .CreateCommandParameters(CompanySystem.Properties.AutoID.ToString, DataEntity.AutoID)
@@ -232,24 +236,26 @@ Namespace DataEntityMgr
                 DataEntity.ErrorMsg = e.Message
             End Try
         End Function
-        Public Overrides Sub Delete()
+        Public Overrides Function Delete() As Object
             Dim mProcRetValue As IDataParameter
             With DataBaseBuilder
                 .CreateCommandParameters(CompanySystem.Properties.AutoID.ToString, DataEntity.AutoID)
                 mProcRetValue = .CreateCommandParametersExplicit("ErrMsg", DbType.String, ParameterDirection.Output)
             End With
+            Dim mCount As Integer = 0
             Try
-                Dim i As Integer = DataBaseBuilder.SaveChanges(CompanySystem.StoreProcedures.spCompanySystem_Delete.ToString, CommandType.StoredProcedure)
+                mCount = DataBaseBuilder.SaveChanges(CompanySystem.StoreProcedures.spCompanySystem_Delete.ToString, CommandType.StoredProcedure)
                 If DataBaseBuilder.ErrorMsg IsNot Nothing Then
                     Throw New Exception(DataBaseBuilder.ErrorMsg)
                 End If
-                If i < 0 Then
+                If mCount < 0 Then
                     DataEntity.ErrorMsg = mProcRetValue.Value    'return error
                 End If
             Catch e As System.Exception
                 DataEntity.ErrorMsg = e.Message
             End Try
-        End Sub
+            Return mCount
+        End Function
         Public Overrides Async Function DeleteAsync() As Task
             Dim mProcRetValue As IDataParameter
             With DataBaseBuilder
