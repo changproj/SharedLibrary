@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Windows.Forms
+Imports Aga.Controls.Tree
 Imports CompanyMasterCore.DataEntity
 Imports CompanyMasterCore.DataEntityMgr
 Imports Helper
@@ -296,7 +297,7 @@ Public Class FrmLogin
 
             Dim mEnquiryForm As New EnGeneral()
             mEnquiryForm.SetFormName = "Companies"
-            mEnquiryForm.DynamicType = GetType(CompanyMaster.Properties)                        'Ctrl + D
+            'mEnquiryForm.DynamicType = GetType(CompanyMaster.Properties)                        'Ctrl + D
             mEnquiryForm.IncludeFieldList.Add(CompanyMaster.Properties.ID.ToString)             'Init dgv
             mEnquiryForm.IncludeFieldList.Add(CompanyMaster.Properties.Name.ToString)           'Init dgv
             mEnquiryForm.PropertyDescriptionList = GetPropertyDescriptions(Of CompanyMaster)()  'Init dgv

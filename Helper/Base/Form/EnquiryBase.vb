@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing
 Imports System.Windows.Forms
 Imports Helper.ApplicationTools
+Imports Helper
 
 Public Class EnquiryBase
 

@@ -46,6 +46,14 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aga.Controls, Version=1.0.0.0, Culture=neutral, PublicKeyToken=fcc90fbf924463a3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Third.Party.Dll\Aga.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Aga.Controls.Plus, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Third.Party.Dll\Aga.Controls.Plus.dll</HintPath>
+    </Reference>
     <Reference Include="CompanyMasterCore">
       <HintPath>..\..\..\CompanyMaster\bin\Debug\CompanyMasterCore.dll</HintPath>
     </Reference>

@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Windows.Forms
+Imports Aga.Controls.Tree
 
 Public Class EnGeneral
 
@@ -80,12 +81,14 @@ Public Class EnGeneral
         LoadDGVData()
         SetTotal()
     End Sub
-    Private Sub Form1_KeyUp(sender As Object, e As KeyEventArgs) Handles MyBase.KeyUp
+    Public Sub Form1_KeyUp(sender As Object, e As KeyEventArgs) Handles MyBase.KeyUp
         If e.KeyCode = Keys.D AndAlso e.Control Then
             'If DynamicType Is Nothing Then Return
             'Dim mFrm As New FrmGlobalVar()
             'mFrm.GetDataEntityValues(DynamicType, dgvSearch.CurrentRow.DataBoundItem)
             'mFrm.ShowDialog()
+            Dim mFrm As New FmQuickWatch
+            mFrm.Watch(dgvSearch.CurrentRow.DataBoundItem)
         End If
     End Sub
 #End Region

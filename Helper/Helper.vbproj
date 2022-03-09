@@ -44,6 +44,12 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aga.Controls">
+      <HintPath>..\Third.Party.Dll\Aga.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Aga.Controls.Plus">
+      <HintPath>..\Third.Party.Dll\Aga.Controls.Plus.dll</HintPath>
+    </Reference>
     <Reference Include="DataAccess">
       <HintPath>..\DataAccess\bin\Debug\DataAccess.dll</HintPath>
     </Reference>
@@ -102,7 +108,9 @@
     <Compile Include="Base\DataEntityMgr\MgrArgs.vb" />
     <Compile Include="Base\DataEntity\DataEntityBase.vb" />
     <Compile Include="Base\DataEntity\IDataEntity.vb" />
-    <Compile Include="Base\Form\EnGeneral.Designer.vb" />
+    <Compile Include="Base\Form\EnGeneral.Designer.vb">
+      <DependentUpon>EnGeneral.vb</DependentUpon>
+    </Compile>
     <Compile Include="Base\Form\EnGeneral.vb">
       <SubType>Form</SubType>
     </Compile>
