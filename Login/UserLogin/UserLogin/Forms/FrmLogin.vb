@@ -28,7 +28,8 @@ Public Class FrmLogin
     Event CloseForms()
     Event ClearGlobalVar()
     Event GetMonths()
-    Event ValidateUser(ByVal userID As String, ByVal userPassword As String)
+    'Event ValidateUser(ByVal userID As String, ByVal userPassword As String)
+    Event ValidateUser()
 #End Region
 
     '#Region "Enum"
@@ -106,6 +107,16 @@ Public Class FrmLogin
     Public ReadOnly Property IsValidUser() As Boolean
         Get
             Return _isValidUser
+        End Get
+    End Property
+    Public ReadOnly Property SelectedCompanyMaster() As CompanyMaster
+        Get
+            Return _selectedCompanyMaster
+        End Get
+    End Property
+    Public ReadOnly Property SelectedMonth() As Object
+        Get
+            Return _selectedMonth
         End Get
     End Property
 #End Region
@@ -217,7 +228,8 @@ Public Class FrmLogin
     Private Sub btnLogin_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnLogin.Click
         Try
             If checkInput() Then
-                RaiseEvent ValidateUser(Me.txtUser.Text.Trim, Me.txtPass.Text.Trim)
+                'RaiseEvent ValidateUser(Me.txtUser.Text.Trim, Me.txtPass.Text.Trim)
+                RaiseEvent ValidateUser()
                 If Me.IsValidUser Then
                     cboCompany.SelectedIndex = GetCoIndex()
                     If cboCompany.SelectedIndex < 0 Then Throw New Exception("Please select a valid Company.")

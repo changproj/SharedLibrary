@@ -21,7 +21,7 @@ Public Class MDIMain
         AddHandler mUserLogin.CloseForms, AddressOf CloseForms
         AddHandler mUserLogin.ClearGlobalVar, AddressOf ClearGlobalVar
         AddHandler mUserLogin.GetMonths, AddressOf GetAccMonth
-        'AddHandler mUserLogin.ValidateUser, AddressOf ValidateUser
+        AddHandler mUserLogin.ValidateUser, AddressOf ValidateUser
 
 
         If mUserLogin.ShowDialog = DialogResult.OK Then
@@ -216,4 +216,51 @@ Public Class MDIMain
 
         '                    End If
     End Function
+
+
+
+#Region ".ini"
+    Enum KeyIni
+        Directory
+        Backup
+        DNTXT
+    End Enum
+
+    Public CONFIGFILE As String = String.Empty  'C:\Users\Public\Nwt\cache\recv\IT-GOHTK\SampleIni\Config 02.ini
+    Public DIRECTORY As String = String.Empty   '[Conn B]
+    Public BACKUP As String = String.Empty
+    Public DNTXT As String = String.Empty
+
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim mStartup As New Helper.Startup
+        With mStartup
+            AddHandler .OnConfigIni, AddressOf ConfigIni
+            .LoadArguments()
+        End With
+
+        MsgBox(CONFIGFILE)
+        MsgBox(DIRECTORY)
+        MsgBox(BACKUP)
+        MsgBox(DNTXT)
+    End Sub
+
+    Function ConfigIni(ByVal FileName As String) As Boolean
+        Select Case True
+            Case CEmpty(FileName) = ""
+                CONFIGFILE = ""
+                DIRECTORY = String.Empty
+                BACKUP = String.Empty
+                DNTXT = String.Empty
+                Return False
+            Case Else
+                CONFIGFILE = CEmpty(FileName)
+                DIRECTORY = cIniHelper.ReadValue(FileName, SectionIni.Default.ToString, KeyIni.Directory.ToString)
+                BACKUP = cIniHelper.ReadValue(FileName, SectionIni.Default.ToString, KeyIni.Backup.ToString)
+                DNTXT = cIniHelper.ReadValue(FileName, SectionIni.Default.ToString, KeyIni.DNTXT.ToString)
+                Return True
+        End Select
+
+    End Function
+#End Region
 End Class

@@ -259,6 +259,7 @@ Partial Class MDIMain
         Me.tsslGroupValue = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tsslClosed = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tsslClosedValue = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.msMain.SuspendLayout()
         Me.ssMain.SuspendLayout()
         Me.SuspendLayout()
@@ -1655,7 +1656,7 @@ Partial Class MDIMain
         'tsslGroup
         '
         Me.tsslGroup.Name = "tsslGroup"
-        Me.tsslGroup.Size = New System.Drawing.Size(46, 25)
+        Me.tsslGroup.Size = New System.Drawing.Size(46, 15)
         Me.tsslGroup.Text = "Group :"
         '
         'tsslGroupValue
@@ -1669,20 +1670,30 @@ Partial Class MDIMain
         'tsslClosed
         '
         Me.tsslClosed.Name = "tsslClosed"
-        Me.tsslClosed.Size = New System.Drawing.Size(152, 25)
+        Me.tsslClosed.Size = New System.Drawing.Size(152, 15)
         Me.tsslClosed.Text = "Is Account Month Closed? :"
         '
         'tsslClosedValue
         '
         Me.tsslClosedValue.Name = "tsslClosedValue"
-        Me.tsslClosedValue.Size = New System.Drawing.Size(36, 25)
+        Me.tsslClosedValue.Size = New System.Drawing.Size(36, 15)
         Me.tsslClosedValue.Text = "[Y/N]"
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(125, 120)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 17
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
         '
         'MDIMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(836, 453)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.ssMain)
         Me.Controls.Add(Me.msMain)
         Me.IsMdiContainer = True
@@ -1931,4 +1942,5 @@ Partial Class MDIMain
     Friend WithEvents tsslGroupValue As ToolStripStatusLabel
     Friend WithEvents tsslClosed As ToolStripStatusLabel
     Friend WithEvents tsslClosedValue As ToolStripStatusLabel
+    Friend WithEvents Button1 As Button
 End Class
