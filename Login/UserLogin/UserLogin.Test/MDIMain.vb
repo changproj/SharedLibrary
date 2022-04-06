@@ -17,11 +17,11 @@ Public Class MDIMain
         mUserLogin.SystemID = EnumSystem.ACC
         mUserLogin.IncludeCO = "98,PP,"
         mUserLogin.ShowMonth = True
+        mUserLogin.HandlerGetMonths = AddressOf GetAccMonth
+        mUserLogin.HandlerValidateUser = AddressOf ValidateUser
 
         AddHandler mUserLogin.CloseForms, AddressOf CloseForms
         AddHandler mUserLogin.ClearGlobalVar, AddressOf ClearGlobalVar
-        AddHandler mUserLogin.GetMonths, AddressOf GetAccMonth
-        AddHandler mUserLogin.ValidateUser, AddressOf ValidateUser
 
 
         If mUserLogin.ShowDialog = DialogResult.OK Then
@@ -67,9 +67,9 @@ Public Class MDIMain
         'TEXTFILEPOOL_REGNO_FINAL = String.Empty
         'TEXTFILEPOOL_SERVERPATH = String.Empty
     End Sub
-    Private Sub GetAccMonth()
+    Private Function GetAccMonth() As List(Of Object)
 
-        mUserLogin.delGetMonths(Function() New List(Of Object) From {"01", "02"})
+        Return New List(Of Object) From {"01", "02"}
 
 
         'Dim optionList As New OptionList(enumIsLike.equal)
@@ -79,12 +79,23 @@ Public Class MDIMain
         'cboAccMonth.DisplayMember = AccMonth.Properties.ID.ToString
         'cboAccMonth.ValueMember = AccMonth.Properties.ID.ToString
         'If cboAccMonth.Items.Count > 0 Then cboAccMonth.SelectedIndex = -1 : cboAccMonth.SelectedIndex = 0
-    End Sub
-    Private Sub ValidateUser()
-        mUserLogin.delValidateUser(AddressOf ValidatingUser)
-    End Sub
+    End Function
+    'Private Sub GetAccMonth()
 
-    Private Function ValidatingUser(ByVal userID As String, ByVal userPassword As String) As Boolean
+    '    mUserLogin.delGetMonths(Function() New List(Of Object) From {"01", "02"})
+
+
+    '    'Dim optionList As New OptionList(enumIsLike.equal)
+    '    'Dim orderByList As OrderByList = New OrderByList()
+    '    'orderByList.Add(New KeyValueHelper(AccMonth.DbFields.Am_ID.ToString, enumSortDirection.Desc))
+    '    'cboAccMonth.DataSource = New AccMonthMgr(CONNSTR).SetDataEntity(New AccMonth With {.Closed = False}).Fetch(New MgrArgs(optionList, orderByList)).DataEntityList
+    '    'cboAccMonth.DisplayMember = AccMonth.Properties.ID.ToString
+    '    'cboAccMonth.ValueMember = AccMonth.Properties.ID.ToString
+    '    'If cboAccMonth.Items.Count > 0 Then cboAccMonth.SelectedIndex = -1 : cboAccMonth.SelectedIndex = 0
+    'End Sub
+
+
+    Private Function ValidateUser(ByVal userID As String, ByVal userPassword As String) As Boolean
         If userID = "ADMIN" AndAlso userPassword = "123" Then
             Return True
         Else

@@ -8,16 +8,18 @@ Imports Helper.ApplicationTools
 
 Public Class FrmLogin
 
+#Region "Fields"
     Private _image As Image
     Private _connectionStringCoMaster As String
     Private _connectionStringCo As String
     Private _systemID As EnumSystem
     Private _includeCO As String
     Private _showMonth As Boolean
-    Private _isValidUser As Boolean = False
     Private _selectedCompanyMaster As CompanyMaster
     Private _selectedMonth As Object
-
+    Private _handlerGetMonths As funcGetMonths
+    Private _handlerValidateUser As funcValidateUser
+#End Region
 
 #Region "Delegate"
     Public Delegate Function funcGetMonths() As List(Of Object)
@@ -27,32 +29,7 @@ Public Class FrmLogin
 #Region "Event"
     Event CloseForms()
     Event ClearGlobalVar()
-    Event GetMonths()
-    'Event ValidateUser(ByVal userID As String, ByVal userPassword As String)
-    Event ValidateUser()
 #End Region
-
-    '#Region "Enum"
-    '    Public Enum EnumSettings
-    '        NeedCurrentMonthTransactionBackup
-    '    End Enum
-    '#End Region
-
-    '#Region "Fields"
-    '    Private WithEvents mTimer As New Timer
-    '    Private mElapseStartTime As DateTime
-    '#End Region
-
-    '#Region "Property"
-    '    Protected ReadOnly Property TextBackupFilename As String
-    '        Get
-    '            Return String.Format("{0}-{1}-{2}",
-    '                                                cCompanyMaster.ID,
-    '                                                String.Format("{0}.Transaction({1})", cCompanyMaster.DbName, cAccMonth.ID),
-    '                                                Today.ToString("yyyyMMdd"))
-    '        End Get
-    '    End Property
-    '#End Region
 
 
 #Region "Property"
@@ -104,11 +81,6 @@ Public Class FrmLogin
             _showMonth = value
         End Set
     End Property
-    Public ReadOnly Property IsValidUser() As Boolean
-        Get
-            Return _isValidUser
-        End Get
-    End Property
     Public ReadOnly Property SelectedCompanyMaster() As CompanyMaster
         Get
             Return _selectedCompanyMaster
@@ -118,6 +90,22 @@ Public Class FrmLogin
         Get
             Return _selectedMonth
         End Get
+    End Property
+    Public Property HandlerGetMonths() As funcGetMonths
+        Get
+            Return _handlerGetMonths
+        End Get
+        Set(ByVal value As funcGetMonths)
+            _handlerGetMonths = value
+        End Set
+    End Property
+    Public Property HandlerValidateUser() As funcValidateUser
+        Get
+            Return _handlerValidateUser
+        End Get
+        Set(ByVal value As funcValidateUser)
+            _handlerValidateUser = value
+        End Set
     End Property
 #End Region
 
@@ -186,8 +174,6 @@ Public Class FrmLogin
             ApplicationTools.ErrorMsg(ex.Message)
         End Try
     End Sub
-
-
     Private Function checkInput() As Boolean
         If String.IsNullOrEmpty(Me.txtUser.Text.Trim) Then
             ApplicationTools.InfoMsg("Please enter a valid User ID.")
@@ -228,9 +214,7 @@ Public Class FrmLogin
     Private Sub btnLogin_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnLogin.Click
         Try
             If checkInput() Then
-                'RaiseEvent ValidateUser(Me.txtUser.Text.Trim, Me.txtPass.Text.Trim)
-                RaiseEvent ValidateUser()
-                If Me.IsValidUser Then
+                If (Me.HandlerValidateUser.Invoke(txtUser.Text.Trim, txtPass.Text.Trim)) Then
                     cboCompany.SelectedIndex = GetCoIndex()
                     If cboCompany.SelectedIndex < 0 Then Throw New Exception("Please select a valid Company.")
                     Me._selectedCompanyMaster = cboCompany.SelectedItem  'will be used for setting Application Variable in calling form
@@ -270,7 +254,7 @@ Public Class FrmLogin
             If (String.IsNullOrEmpty(serverName) = False) AndAlso (String.IsNullOrEmpty(connectionString) = False) Then
                 _connectionStringCo = String.Format(connectionString, serverName, companyMaster.DbName)   'set Application Variable
                 If Me.ShowMonth Then
-                    RaiseEvent GetMonths()
+                    cboMonth.DataSource = Me.HandlerGetMonths.Invoke
                     cboMonth.Enabled = True
                 Else
                     EnableControl(True)
@@ -332,17 +316,6 @@ Public Class FrmLogin
     End Sub
 #End Region
 
-
-#Region "Calling From Outside This Class"
-    Public Sub delGetMonths(ByVal funcGetMonths As funcGetMonths)
-        Dim mObject As List(Of Object) = funcGetMonths.Invoke
-        cboMonth.DataSource = mObject
-        'MsgBox(String.Join(",", mObject))
-    End Sub
-    Public Sub delValidateUser(ByVal funcValidateUser As funcValidateUser)
-        _isValidUser = funcValidateUser.Invoke(txtUser.Text.Trim, txtPass.Text.Trim)
-    End Sub
-#End Region
 
 
 

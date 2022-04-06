@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationTools.vb" />
+    <Compile Include="basEncrypt.vb" />
     <Compile Include="Base\DataEntityMgr\DataEntityMgrBase.vb" />
     <Compile Include="Base\DataEntityMgr\IDataEntityMgr.vb" />
     <Compile Include="Base\DataEntityMgr\MgrArgs.vb" />
