@@ -139,6 +139,8 @@
     </Compile>
     <Compile Include="FieldHelper.vb" />
     <Compile Include="FileHelper.vb" />
+    <Compile Include="GeneralMgr.vb" />
+    <Compile Include="GMailHelper.vb" />
     <Compile Include="IniHelper.vb" />
     <Compile Include="KeyValueHelper.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
